@@ -1,6 +1,7 @@
 // 进一步拆分
 import Link from "next/link";
 import classes from "./event-item.module.css";
+import Button from "../ui/button";
 // this classes thing here will be an object
 
 function EventItem(props) {
@@ -15,6 +16,7 @@ function EventItem(props) {
   const formattedAddress = location.replace(",", "\n");
 
   const exploreLink = `/events/${id}`;
+
   return (
     <li className={classes.item}>
       <img src={"/" + image} alt={title} />
@@ -33,7 +35,7 @@ function EventItem(props) {
         </div>
         {/* Link */}
         <div className={classes.actions}>
-          <Link href={exploreLink}>Explore Event</Link>
+          <Button link={exploreLink}>Explore Event</Button>
         </div>
       </div>
     </li>
