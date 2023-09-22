@@ -1,7 +1,9 @@
 // 进一步拆分
-import Link from "next/link";
 import classes from "./event-item.module.css";
 import Button from "../ui/button";
+import DateIcon from "../icons/date-icons";
+import AddressIcon from "../icons/address-icon";
+import ArrowRightIcon from "../icons/arrow-right-icon";
 // this classes thing here will be an object
 
 function EventItem(props) {
@@ -26,16 +28,23 @@ function EventItem(props) {
           <h2>{title}</h2>
 
           <div className={classes.date}>
+            <DateIcon />
             <time>{humanReadabledDate}</time>
           </div>
 
           <div className={classes.address}>
+            <AddressIcon />
             <address>{formattedAddress}</address>
           </div>
         </div>
         {/* Link */}
         <div className={classes.actions}>
-          <Button link={exploreLink}>Explore Event</Button>
+          <Button link={exploreLink}>
+            <span>Explore Event</span>
+            <span className={classes.icon}>
+              <ArrowRightIcon />
+            </span>
+          </Button>
         </div>
       </div>
     </li>
