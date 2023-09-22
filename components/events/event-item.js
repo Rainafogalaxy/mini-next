@@ -1,5 +1,7 @@
 // 进一步拆分
 import Link from "next/link";
+import classes from "./event-item.module.css";
+// this classes thing here will be an object
 
 function EventItem(props) {
   const { title, image, date, location, id } = props;
@@ -14,23 +16,23 @@ function EventItem(props) {
 
   const exploreLink = `/events/${id}`;
   return (
-    <li>
+    <li className={classes.item}>
       <img src={"/" + image} alt={title} />
       {/* 下边是Div */}
-      <div>
-        <div>
+      <div className={classes.content}>
+        <div className={classes.summary}>
           <h2>{title}</h2>
 
-          <div>
+          <div className={classes.date}>
             <time>{humanReadabledDate}</time>
           </div>
 
-          <div>
+          <div className={classes.address}>
             <address>{formattedAddress}</address>
           </div>
         </div>
         {/* Link */}
-        <div>
+        <div className={classes.actions}>
           <Link href={exploreLink}>Explore Event</Link>
         </div>
       </div>
