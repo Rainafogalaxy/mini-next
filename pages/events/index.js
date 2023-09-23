@@ -14,8 +14,12 @@ import { useRouter } from "next/router"; //编程式导航控制路由
 
 function AllEventsPage() {
   const events = getAllEvents();
+  const router = useRouter();
 
-  function findEventsHandler(year, month) {}
+  function findEventsHandler(year, month) {
+    const fullpath = `/events/${year}/${month}`;
+    router.push(fullpath);
+  }
   return (
     <Fragment>
       <EventsSearch onSearch={findEventsHandler} />
