@@ -1,21 +1,35 @@
 import Button from "../ui/button";
 import classes from "./events-search.module.css";
+import { useRef } from "react";
 
 function EventSearch(props) {
+  // 相当于Vue的双向绑定
+  const yearInputRef = useRef();
+  const monthInputRef = useRef();
+  function submitHandler(event) {
+    //在表单提交时调用
+    event.preventDefault(); //阻止浏览器发送默认的http请求(会重新加载页面；失去当前的所有改变的 状态)
+
+    const selectedYear = yearInputRef.current.value;
+    const selectedMonth = monthInputRef.current.value;
+
+    props.onSearch(selectedYear, selectedMonth);
+  }
+
   return (
-    <form>
-      <div>
-        <div>
+    <form className={classes.form} onSubmit={submitHandler}>
+      <div className={classes.controls}>
+        <div className={classes.control}>
           <label htmlFor="year">Year</label>
-          <select id="year">
+          <select id="year" ref={yearInputRef}>
             <option value="2023">2023</option>
             <option value="2024">2024</option>
           </select>
         </div>
 
-        <div>
+        <div className={classes.control}>
           <label htmlFor="month">Month</label>
-          <select id="month">
+          <select id="month" ref={monthInputRef}>
             <option value="1">January</option>
             <option value="2">February</option>
             <option value="3">March</option>
