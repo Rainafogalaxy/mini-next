@@ -1,20 +1,39 @@
 import { useRouter } from "next/router";
-import { getFilteredEvents } from "../../dummy-data";
+import { getFilteredEvents } from "../../helpers/api-utils";
 import EventList from "../../components/events/event-list";
 import ResultsTitle from "../../components/events/results-title";
 import { Fragment } from "react";
 import Button from "../../components/ui/button";
 import ErrorAlert from "../../components/ui/error-alert";
 
-function FilterEventsPage() {
-  const router = useRouter();
+function FilterEventsPage(props) {
+  // const router = useRouter();
 
-  const filterData = router.query.slug;
-  if (!filterData) {
+  // const filterData = router.query.slug;
+  // if (!filterData) {
+  //   return (
+  //     <Fragment>
+  //       <ErrorAlert>
+  //         <p className="center">Loading...</p>;
+  //       </ErrorAlert>
+  //       <div className="center">
+  //         <Button link="/events">Show All Events</Button>
+  //       </div>
+  //     </Fragment>
+  //   );
+  // }
+
+  // const filteredYear = filterData[0];
+  // const filteredMonth = filterData[1];
+
+  // const numYear = +filteredYear;
+  // const numMonth = +filteredMonth;
+  // 如果url不对
+  if (props.hasError) {
     return (
       <Fragment>
         <ErrorAlert>
-          <p className="center">Loading...</p>;
+          <p>Invalid filter.Please adjust your value!</p>
         </ErrorAlert>
         <div className="center">
           <Button link="/events">Show All Events</Button>
@@ -23,6 +42,32 @@ function FilterEventsPage() {
     );
   }
 
+  const filteredEvents = props.events;
+  // 如果过滤后是一个空数组
+  if (!filteredEvents || filteredEvents.length === 0) {
+    return (
+      <Fragment>
+        <ErrorAlert>
+          <p>No events found for the chosen filter!</p>
+        </ErrorAlert>
+        <div className="center">
+          <Button link="/events">Show All Events</Button>
+        </div>
+      </Fragment>
+    );
+  }
+  const date = new Date(props.date.year, props.date.month - 1);
+  return (
+    <Fragment>
+      <ResultsTitle date={date} />
+      <EventList items={filteredEvents} />
+    </Fragment>
+  );
+}
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const filterData = params.slug;
   const filteredYear = filterData[0];
   const filteredMonth = filterData[1];
 
@@ -37,43 +82,30 @@ function FilterEventsPage() {
     numMonth < 1 ||
     numMonth > 12
   ) {
-    return (
-      <Fragment>
-        <ErrorAlert>
-          <p>Invalid filter.Please adjust your value!</p>
-        </ErrorAlert>
-        <div className="center">
-          <Button link="/events">Show All Events</Button>
-        </div>
-      </Fragment>
-    );
+    return {
+      props: { hasError: true },
+
+      // notFound: true,
+      // redirect: {
+      //   destination: "/error",
+      // },
+    };
   }
 
-  const filteredEvents = getFilteredEvents({
+  const filteredEvents = await getFilteredEvents({
     year: numYear,
     month: numMonth,
   });
 
-  // 如果过滤后是一个空数组
-  if (!filteredEvents || filteredEvents.length === 0) {
-    return (
-      <Fragment>
-        <ErrorAlert>
-          <p>No events found for the chosen filter!</p>
-        </ErrorAlert>
-        <div className="center">
-          <Button link="/events">Show All Events</Button>
-        </div>
-      </Fragment>
-    );
-  }
-  const date = new Date(numYear, numMonth - 1);
-  return (
-    <Fragment>
-      <ResultsTitle date={date} />
-      <EventList items={filteredEvents} />
-    </Fragment>
-  );
+  return {
+    props: {
+      events: filteredEvents,
+      date: {
+        year: numYear,
+        month: numMonth,
+      },
+    },
+  };
 }
 
 export default FilterEventsPage;

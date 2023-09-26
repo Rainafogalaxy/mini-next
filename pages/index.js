@@ -17,6 +17,8 @@ export async function getStaticProps() {
     props: {
       events: featuredEvents,
     },
+    revalidate: 1800,
+    // 每半小时重新生成这个页面
   };
 }
 
