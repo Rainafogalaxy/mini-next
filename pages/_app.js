@@ -7,7 +7,9 @@ import Head from "next/head";
 export default function App({ Component, pageProps }) {
   return (
     <Layout>
+      {/* 多个Head会被Next.js合并,向下取 */}
       <Head>
+        <title>Next Events</title>
         <meta name="viewport" content="initial-scale=1.0,width=device-width" />
       </Head>
       <Component {...pageProps} />;
@@ -16,3 +18,4 @@ export default function App({ Component, pageProps }) {
 }
 
 // 放到这里的组件相当于全局组件
+// 可以把_app.js想象成根组件(root component)
