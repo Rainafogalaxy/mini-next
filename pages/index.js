@@ -1,11 +1,10 @@
-import { getFeaturedEvents } from "../dummy-data";
+import { getFeaturedEvents } from "../helpers/api-utils";
 import EventList from "../components/events/event-list";
 
-function HomePage() {
-  const featureEvents = getFeaturedEvents();
+function HomePage(props) {
   return (
     <div>
-      <EventList items={featureEvents} />
+      <EventList items={props.events} />
     </div>
   );
 }
@@ -13,9 +12,10 @@ function HomePage() {
 // 在首页使用预渲染
 
 export async function getStaticProps() {
+  const featuredEvents = await getFeaturedEvents();
   return {
     props: {
-      featuredEvents:
+      events: featuredEvents,
     },
   };
 }
