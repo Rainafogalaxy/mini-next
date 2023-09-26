@@ -1,9 +1,16 @@
 import { getFeaturedEvents } from "../helpers/api-utils";
 import EventList from "../components/events/event-list";
+// Nextjs的特殊头标签
+import Head from "next/head";
 
 function HomePage(props) {
   return (
     <div>
+      <Head>
+        <title>NextJS</title>
+        {/* 对搜索引擎很重要的标签(会显示在搜索结果的文本) */}
+        <meta name="description" content="Hello,I am leaning." />
+      </Head>
       <EventList items={props.events} />
     </div>
   );

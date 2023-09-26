@@ -7,6 +7,7 @@ import EventList from "../../components/events/event-list";
 
 import EventsSearch from "../../components/events/events-search";
 import { Fragment } from "react";
+import Head from "next/head";
 
 import { useRouter } from "next/router"; //编程式导航控制路由
 
@@ -22,6 +23,11 @@ function AllEventsPage(props) {
   }
   return (
     <Fragment>
+      <Head>
+        <title>NextJS</title>
+        {/* 对搜索引擎很重要的标签(会显示在搜索结果的文本) */}
+        <meta name="description" content="Hello,I am leaning." />
+      </Head>
       <EventsSearch onSearch={findEventsHandler} />
       <EventList items={events} />
     </Fragment>

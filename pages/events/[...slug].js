@@ -5,6 +5,7 @@ import ResultsTitle from "../../components/events/results-title";
 import { Fragment } from "react";
 import Button from "../../components/ui/button";
 import ErrorAlert from "../../components/ui/error-alert";
+import Head from "next/head";
 
 function FilterEventsPage(props) {
   // const router = useRouter();
@@ -59,6 +60,11 @@ function FilterEventsPage(props) {
   const date = new Date(props.date.year, props.date.month - 1);
   return (
     <Fragment>
+      <Head>
+        <title>NextJS</title>
+        {/* 对搜索引擎很重要的标签(会显示在搜索结果的文本) */}
+        <meta name="description" content="Hello,I am leaning." />
+      </Head>
       <ResultsTitle date={date} />
       <EventList items={filteredEvents} />
     </Fragment>
