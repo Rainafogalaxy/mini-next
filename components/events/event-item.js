@@ -6,6 +6,9 @@ import AddressIcon from "../icons/address-icon";
 import ArrowRightIcon from "../icons/arrow-right-icon";
 // this classes thing here will be an object
 
+// 优化图像的大小
+import Image from "next/image";
+
 function EventItem(props) {
   const { title, image, date, location, id } = props;
 
@@ -21,7 +24,7 @@ function EventItem(props) {
 
   return (
     <li className={classes.item}>
-      <img src={"/" + image} alt={title} />
+      <Image src={"/" + image} alt={title} width={280} height={140} priority />
       {/* 下边是Div */}
       <div className={classes.content}>
         <div className={classes.summary}>
