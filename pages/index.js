@@ -2,6 +2,7 @@ import { getFeaturedEvents } from "../helpers/api-utils";
 import EventList from "../components/events/event-list";
 // Nextjs的特殊头标签
 import Head from "next/head";
+import NewsletterRegistration from "../components/input/newsletter-registration";
 
 function HomePage(props) {
   return (
@@ -11,6 +12,7 @@ function HomePage(props) {
         {/* 对搜索引擎很重要的标签(会显示在搜索结果的文本) */}
         <meta name="description" content="Hello,I am leaning." />
       </Head>
+      <NewsletterRegistration />
       <EventList items={props.events} />
     </div>
   );
